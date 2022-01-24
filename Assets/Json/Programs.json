@@ -1,0 +1,27 @@
+{
+    "adobe": {
+        "nome": "Adobe Acrobat Reader",
+        "icone": "Assets/Images/acrobat-reader.png",
+        "comando": "notepad.exe"
+    },
+    "anydesk": {
+        "nome": "Team Viewer",
+        "icone": "Assets/Images/team-viewer.png",
+        "comando": "notepad.exe"
+    },
+    "javase6": {
+        "nome": "Java SE6",
+        "icone": "./Assets/Images/javase6.png",
+        "comando": "java.exe"
+    },
+    "teams": {
+        "nome": "Teams",
+        "icone": "./Assets/Images/teams.png",
+        "comando": "teams.exe"
+    },
+    "firefox": {
+        "nome": "Firefox",
+        "icone": "./Assets/Images/firefox.png",
+        "comando": "firefox.exe"
+    }
+}

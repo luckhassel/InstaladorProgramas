@@ -1,4 +1,6 @@
 import subprocess
+import os
+import threading
 
 #Class to help installer page
 class Helper:
@@ -8,6 +10,7 @@ class Helper:
         self.programs_selected = programs_selected
         self.page_instance = page_instance
         self.commands_to_execute = []
+        self.programs_to_execute = []
 
     #Downloads the selected programs
     def download(self):
@@ -16,33 +19,35 @@ class Helper:
             if self.get_button_status(i):
                 print(self.json_instance.json_commands[i])
                 self.commands_to_execute.append(self.json_instance.json_commands[i])
+                self.programs_to_execute.append(self.json_instance.json_names[i])
             i+=1
         
         if(len(self.commands_to_execute)):
             print("Existem processos!")
-            self.progress_checker()
+            self.update_label()
     
     #Get button status
     def get_button_status(self, key):
         return self.programs_selected.programs_selected[key].get()
 
     #Function to change progress label
-    def progress_checker(self):
-        self.page_instance.download_label['text'] = "Instalando Aplicativos..."
+    def update_label(self):
         self.process_checker()
         self.page_instance.download_label['text'] = "Aplicativos Instalados!"
 
     #Function to check the process
     def process_checker(self):
          bar_checker = 100/len(self.commands_to_execute)
+         self.page_instance.pb["value"] = 0
+         self.page_instance.pb.update()
          while(len(self.commands_to_execute) > 0):
-             p = subprocess.Popen(self.__split_commands(self.commands_to_execute[0]))
-             while(1):
-                if p.poll() is not None:
-                    self.commands_to_execute.pop()
-                    self.page_instance.pb["value"] += bar_checker
-                    break
-                self.page_instance.pb.update()
+            self.page_instance.download_label['text'] = f"Instalando {self.programs_to_execute[0]}..."
+            self.page_instance.pb.update()
+            threading.Thread(target=os.system(self.commands_to_execute[0]))
+            self.page_instance.pb["value"] += bar_checker
+            del self.commands_to_execute[0]
+            del self.programs_to_execute[0]
+            self.page_instance.pb.update()
     
     #Split executable commands            
     def __split_commands(self, command):

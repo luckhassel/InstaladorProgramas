@@ -1,5 +1,5 @@
 import tkinter
-from tkinter import font
+from tkinter import MULTIPLE, font
 from tkinter.font import BOLD
 from tkinter import BOTH, LEFT, RIGHT, PhotoImage, Scrollbar, ttk
 from Helpers import JsonReader
@@ -48,7 +48,7 @@ class Installer(BasePage.BasePage):
 
         position = 0
 
-        for program_element in self.json_file.json_keys:          
+        for program_element in self.json_file.json_keys:
             self.programs_variables.programs_selected[position] = tkinter.IntVar()
 
             self.img_icon_installer = PhotoImage(file=self.json_file.data[program_element]["icone"])
@@ -57,7 +57,7 @@ class Installer(BasePage.BasePage):
             
             self.canvas.create_window(0, position*30, anchor='nw', window=self.label, height=25)
             self.canvas.create_line(0, 25 + position*30, 500, 25 + position*30)
-            self.checkButton = tkinter.Checkbutton(self.canvas, background="white", variable=self.programs_variables.programs_selected[position])
+            self.checkButton = tkinter.Checkbutton(self.canvas, background="white", variable=self.programs_variables.programs_selected[position], bd=0)
             self.canvas.create_window(350, position*30, anchor='nw', window=self.checkButton, height=25)
 
             position += 1

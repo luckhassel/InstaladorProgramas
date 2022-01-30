@@ -2,11 +2,13 @@ import tkinter
 from tkinter.font import BOLD
 from tkinter import BOTH, LEFT, RIGHT, PhotoImage, Scrollbar, ttk
 from Helpers import WindowCreator
+from Helpers import UserData
 
 class BasePage:
 
     def __init__(self, master):
         self.master = master
+        self.user_data = UserData.UserData.get_instance()
         self.create_frames()
         self.create_labels()
         self.create_buttons()
@@ -17,7 +19,7 @@ class BasePage:
         self.left_frame.pack(fill='both', side='left', expand='True', padx=10, pady=30)
 
     def create_labels(self):
-        tkinter.Label(self.left_frame, text="Mateus Junior", font=("Arial", 10, BOLD), background="white").place(relx=0.25, rely=0.3)
+        tkinter.Label(self.left_frame, text=self.user_data.user_name, font=("Arial", 10, BOLD), background="white").place(relx=0.25, rely=0.3)
         tkinter.Label(self.left_frame, text="Técnico", font=("Arial", 8, BOLD), background="white").place(relx=0.35, rely=0.35)
 
         img_user = PhotoImage(file="Assets/Images/man.png")

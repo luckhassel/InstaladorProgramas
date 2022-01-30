@@ -109,7 +109,7 @@ class AddProgram(BasePage.BasePage):
             self.__get_program_name():{
                 "nome": self.__get_extended_program_name(),
                 "icone": f"./Assets/Images/{self.__get_program_name()}" + ".png",
-                "comando": self.__get_program_command()
+                "comando": f"./Assets/Programs/{self.__get_program_command()}"
             }
         }
         self.json_file.data.update(new_program)

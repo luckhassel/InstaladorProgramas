@@ -7,12 +7,12 @@
     "anydesk": {
         "nome": "Team Viewer",
         "icone": "Assets/Images/team-viewer.png",
-        "comando": "notepad.exe"
+        "comando": "Assets\\programs\\AnyDesk.exe --install \"C:\\Program Files\\AnyDesk\""
     },
     "javase6": {
         "nome": "Java SE6",
         "icone": "./Assets/Images/javase6.png",
-        "comando": "java.exe"
+        "comando": "notepad.exe"
     },
     "teams": {
         "nome": "Teams",

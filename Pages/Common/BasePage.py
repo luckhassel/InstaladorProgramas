@@ -4,6 +4,7 @@ from tkinter import BOTH, LEFT, RIGHT, PhotoImage, Scrollbar, ttk
 from Helpers import WindowCreator
 from Helpers import UserData
 
+#Common elements between pages
 class BasePage:
 
     def __init__(self, master):

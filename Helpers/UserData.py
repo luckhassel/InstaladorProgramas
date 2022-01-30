@@ -1,3 +1,5 @@
+
+#Singleton class to store user name
 class UserData:
     __instance = None
 

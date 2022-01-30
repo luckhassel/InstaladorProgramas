@@ -7,6 +7,7 @@ import pyodbc
 from Helpers import ConnectionString
 from Helpers import UserData
 
+#Creates login page
 class Login:
 
     def __init__(self, master):
@@ -53,6 +54,7 @@ class Login:
         self.password = tkinter.Entry(self.left_frame, width = 30, background="#EEEEEE", show="*", borderwidth=0,  font=("Trebuchet MS", 12))
         self.password.place(rely=0.8, relx=0.25)
 
+    #Check with database if data matches
     def __login(self, event=None):
         name_value = self.username.get()
         password_value = self.password.get()
@@ -63,7 +65,7 @@ class Login:
 
         with pyodbc.connect('DRIVER='+ConnectionString.driver+';SERVER=tcp:'+ConnectionString.server+';PORT=1433;DATABASE='+ConnectionString.database+';UID='+ConnectionString.username+';PWD='+ ConnectionString.password) as conn:
             with conn.cursor() as cursor:
-                cursor.execute("SELECT * FROM [dbo].[users]")
+                cursor.execute(f"SELECT * FROM {ConnectionString.table}")
                 row = cursor.fetchone()
                 while row:
                     sql_name = str(row[1])

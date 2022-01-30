@@ -1,5 +1,6 @@
 import json
 
+#Reads Json file and store its values, splitting into keys, names, icons and commands
 class JsonHelper:
 
     def __init__(self):

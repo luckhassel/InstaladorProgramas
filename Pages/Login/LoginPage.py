@@ -54,7 +54,6 @@ class Login:
         self.password = tkinter.Entry(self.left_frame, width = 30, background="#EEEEEE", show="*", borderwidth=0,  font=("Trebuchet MS", 12))
         self.password.place(rely=0.8, relx=0.25)
 
-    #Check with database if data matches
     def __login(self, event=None):
         name_value = self.username.get()
         password_value = self.password.get()

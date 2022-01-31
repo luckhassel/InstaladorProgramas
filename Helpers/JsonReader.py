@@ -3,8 +3,27 @@ import json
 #Reads Json file and store its values, splitting into keys, names, icons and commands
 class JsonHelper:
 
+    __cache = False
+    __programs_cached = {}
+
+    @staticmethod
+    def has_cache():
+        return JsonHelper.__cache
+
+    @staticmethod
+    def get_pattern():
+        return JsonHelper.__programs_cached
+
     def __init__(self):
         self.json_file = open("Assets/Json/Programs.json")
+        try:
+            self.programs_pattern = open("Assets/Json/ProgramsCache.json")
+            self.pattern_json = json.load(self.programs_pattern)
+            JsonHelper.__programs_cached = self.pattern_json["programs"]
+            JsonHelper.__cache = True
+        except:
+            print("No cache")
+
         self.data = json.load(self.json_file)
         self.json_keys = []
         self.json_icons = []

@@ -2,6 +2,8 @@ import tkinter
 from tkinter import MULTIPLE, font
 from tkinter.font import BOLD
 from tkinter import BOTH, LEFT, RIGHT, PhotoImage, Scrollbar, ttk
+
+from soupsieve import select
 from Helpers import JsonReader
 from Helpers.ProgramsVariables import ProgramsVariables
 from Pages.Installer.InstallerHelper import Helper
@@ -15,7 +17,7 @@ class Installer(BasePage.BasePage):
         self.master.geometry("700x500")
         self.master.resizable(0,0)
         self.json_file = JsonReader.JsonHelper()
-        self.programs_variables = ProgramsVariables()
+        self.programs_variables = ProgramsVariables(len(self.json_file.json_keys))
         self.base_page = BasePage.BasePage(self.master)
         self.create_frames()
         self.installer_helper = Helper(self.json_file, self.programs_variables, self)
@@ -42,23 +44,34 @@ class Installer(BasePage.BasePage):
 
     #Create all labels in the page
     def create_labels(self):
-        tkinter.Label(self.upper_frame, text="Instalar Aplicativos", font=("Arial", 20, BOLD)).place(relx=0.0, rely=0.5)
+        tkinter.Label(self.upper_frame, text="Instalar Aplicativos", font=("Arial", 20, BOLD)).place(relx=0.0, rely=0.3)
+
+        tkinter.Label(self.upper_frame, text="Selecionar Todos", font=("Arial", 8, BOLD)).place(relx=0.0, rely=0.8)
+        self.select_all = tkinter.Checkbutton(self.upper_frame, command=self.installer_helper.install_all_programs).place(relx=0.21, rely=0.79)
+        tkinter.Label(self.upper_frame, text="Selecionar Básicos", font=("Arial", 8, BOLD)).place(relx=0.25, rely=0.8)
+        self.select_basic = tkinter.Checkbutton(self.upper_frame, command=self.installer_helper.install_basic_programs).place(relx=0.48, rely=0.79)
+        tkinter.Label(self.upper_frame, text="Selecionar Essenciais", font=("Arial", 8, BOLD)).place(relx=0.52, rely=0.8)
+        self.select_essential = tkinter.Checkbutton(self.upper_frame, command=self.installer_helper.install_essential_programs).place(relx=0.79, rely=0.79)
+
         self.download_label = tkinter.Label(self.bottom_frame, text="", font=("Arial", 10))
         self.download_label.place(relx=0)
 
         position = 0
 
         for program_element in self.json_file.json_keys:
+            selected = self.programs_variables.programs_selected[position] == 1
             self.programs_variables.programs_selected[position] = tkinter.IntVar()
 
             self.img_icon_installer = PhotoImage(file=self.json_file.data[program_element]["icone"])
             self.label = tkinter.Label(self.canvas, text=self.json_file.data[program_element]["nome"], font=("Arial",10, BOLD), image=self.img_icon_installer,compound=LEFT,background="white")
             self.label.image = self.img_icon_installer  
             
-            self.canvas.create_window(0, position*30, anchor='nw', window=self.label, height=25)
-            self.canvas.create_line(0, 25 + position*30, 500, 25 + position*30)
+            self.canvas.create_window(0, (position+1)*30, anchor='nw', window=self.label, height=25)
+            self.canvas.create_line(0, 25 + (position+1)*30, 500, 25 + (position+1)*30)
             self.checkButton = tkinter.Checkbutton(self.canvas, background="white", variable=self.programs_variables.programs_selected[position], bd=0)
-            self.canvas.create_window(350, position*30, anchor='nw', window=self.checkButton, height=25)
+            self.canvas.create_window(350, (position+1)*30, anchor='nw', window=self.checkButton, height=25)
+            if(selected):
+                self.programs_variables.programs_selected[position].set(1)
 
             position += 1
         
